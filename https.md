@@ -63,6 +63,6 @@ $ sudo ufw allow 'Apache Secure'
 
 
 ## references
-https://qiita.com/yuichi1992_west/items/a021b078c9aa8cc25b76
-https://deep-blog.jp/engineer/11632/
-http://li-one.hatenablog.jp/entry/2016/07/04/110547
+- https://qiita.com/yuichi1992_west/items/a021b078c9aa8cc25b76
+- https://deep-blog.jp/engineer/11632/
+- http://li-one.hatenablog.jp/entry/2016/07/04/110547
