@@ -3,6 +3,7 @@
 os: Ubuntu 18.04.5 LTS
 
 ## process
+### サーバー立ち上げ
 ```
 $ sudo apt install apache2
 $ sudo ufw allow 'Apache Full'
@@ -13,32 +14,50 @@ $ curl -O https://dl.eff.org/certbot-auto
 $ sudo mv certbot-auto /usr/local/bin/certbot-auto
 $ sudo chown root /usr/local/bin/certbot-auto
 $ sudo chmod 0755 /usr/local/bin/certbot-auto
-$ sudo service apache2 stop
-$ sudo /usr/local/bin/certbot-auto
-```
-指示に従う
-
-証明書ファイルが保存される
-```
-$ sudo ls -la /etc/letsencrypt/live/%{subdomain}
 ```
 
 起動
 ```
-$ sudo service apache2 start
 $ sudo a2enmod ssl
-$ sudo a2ensite default-ssl
+$ sudo a2enmod rewrite
 $ sudo service apache2 restart
 ```
 
-一応
+Apacheのconfigを記述
 ```
-$ sudo /usr/local/bin/certbot-auto
-(choose domain)
-(1. Attempt to reinstall this existing certificate)
+$ cd /etc/apache2/sites-available/
+$ sudo vi domain.com.conf
+<VirtualHost *:80>
+  ServerName domain.com
+  DocumentRoot /var/www/html
+</VirtualHost>
+$ sudo vi sub.domain.com.conf
+<VirtualHost *:80>
+  ServerName sub.domain.com
+  Redirect permanent / https://redirect.com/
+</VirtualHost>
+$ sudo a2ensite *
+$ sudo service apache2 restart
 ```
 
-自動更新
+### https化
+```
+$ sudo /usr/local/bin/certbot-auto
+$ sudo service apache2 restart
+```
+受け付けている(Apacheのconfigに記述した)ドメインが一覧に出る。
+
+一覧からドメインを選んでSSL化。
+
+Apacheのconfigにredirectが自動で追記されるし、https通信用に新しく生成されたconfigも自動で `a2ensite` される。
+
+
+証明書ファイルが保存されている
+```
+$ sudo ls -la /etc/letsencrypt/live/%{subdomain}
+```
+
+自動更新の設定
 ```
 $ sudo /usr/local/bin/certbot-auto renew --post-hook "sudo service apache2 restart"
 $ sudo vi /etc/cron.d/certbot
@@ -46,19 +65,23 @@ $ sudo vi /etc/cron.d/certbot
 $ service crond restart
 ```
 
-http -> https へのリダイレクト
+その他のページの http -> https へのリダイレクト
 ```
-$ sudo vi /etc/apache2/sites-available/http-redirect.conf
+$ sudo vi 002-httpsRedirect.conf
 <VirtualHost *:80>
-  Redirect permanent / https://${domain}/
+  RewriteEngine on
+  RewriteRule ^.*$ https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
 </VirtualHost>
 $ sudo a2ensite http-redirect
 $ sudo service apache2 restart
 ```
 
-お好み
+### 他、コマンドメモ
 ```
-$ sudo ufw allow 'Apache Secure'
+$ sudo a2dissite ${.confのファイル名}
+.confを適用範囲から除外
+$ sudo a2dismod ${mod名}
+modの停止
 ```
 
 
