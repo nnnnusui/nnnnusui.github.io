@@ -6,8 +6,8 @@
 # 登録されているパスを一覧表示
 $Env:PSModulePath -split ";"
 ```
-> https://docs.microsoft.com/ja-jp/powershell/scripting/developer/module/modifying-the-psmodulepath-installation-path
-> https://docs.microsoft.com/ja-jp/powershell/scripting/developer/module/importing-a-powershell-module
+> [docs.microsoft.com - PSModulePath のインストールパスを変更する - PowerShell | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/scripting/developer/module/modifying-the-psmodulepath-installation-path)  
+> [docs.microsoft.com - PowerShell モジュールのインポート - PowerShell | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/scripting/developer/module/importing-a-powershell-module)
 
 ## WriteModule
 ### Moduleを定義する
@@ -43,8 +43,8 @@ Hello
 
 ### ModuleManifestの記述
 
-> https://docs.microsoft.com/ja-jp/powershell/scripting/developer/module/how-to-write-a-powershell-module-manifest
+> [docs.microsoft.com - PowerShell モジュールマニフェストを記述する方法 - PowerShell | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/scripting/developer/module/how-to-write-a-powershell-module-manifest)
 
 ## References
-> https://tech.guitarrapc.com/entry/2013/12/03/014013#なぜモジュールを利用するのか
-> https://forsenergy.com/ja-jp/windowspowershellhelp/html/3be86334-7efa-4ccd-952e-54afe47977a2.htm
+> [tech.guitarrapc.com - PowerShell のモジュール詳解とモジュールへのコマンドレット配置手法を考える - tech.guitarrapc.cóm](https://tech.guitarrapc.com/entry/2013/12/03/014013#なぜモジュールを利用するのか)  
+> [forsenergy.com - about_Modules](https://forsenergy.com/ja-jp/windowspowershellhelp/html/3be86334-7efa-4ccd-952e-54afe47977a2.htm)
